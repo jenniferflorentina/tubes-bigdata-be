@@ -1,7 +1,7 @@
 package main
 
-import "github.com/tubes-bigdata/app"
+import "TubesBigData/app"
 
 func main() {
-	app.StartApp()
+	app.StartApplication()
 }

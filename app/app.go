@@ -1,17 +1,30 @@
 package app
 
 import (
-	"github.com/tubes-bigdata/domain"
+	"log"
 
-	"github.com/gin-gonic/gin"
+	"TubesBigData/config"
+	"TubesBigData/database"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 var (
-	router = gin.Default()
+	router *fiber.App
 )
 
-func StartApp() {
-	MapUrls()
-	domain.ConnDB()
-	router.Run(":8083")
+func StartApplication() {
+	serverPort := config.Config("PORT")
+	// Try connecting to the database
+	err := database.Connect()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	router = fiber.New()
+	router.Use(cors.New())
+	mapURLs()
+	_ = router.Listen(":" + serverPort)
 }

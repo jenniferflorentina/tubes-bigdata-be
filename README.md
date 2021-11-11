@@ -1,17 +1,20 @@
-### Used:
-lang: **go**  
-mux: **github.com/gin-gonic/gin**  
-mongodb driver: **go.mongodb.org/mongo-driver**  
-### How to run app:
-First, get libs.
+## Setup:
+
+### If building from source:
+
+1. Once this repository is cloned and golang is installed in the system, navigate to this directory and run
+
 ```
-go get github.com/gin-gonic/gin
+go mod download
 ```
+
+2. Once the dependencies are downloaded, using sample.env as reference either create a file called .env with the same keys or directly configure same keys as environment variables.
+3. After the configuration and ensuring that the db is operational, run either
+
 ```
-go get go.mongodb.org/mongo-driver
-```
-Then run the code.
-```
+go build # to get the executable to run
+
+or
+
 go run main.go
 ```
-It runs on port 8080 by default.
