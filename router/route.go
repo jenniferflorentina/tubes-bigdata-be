@@ -9,15 +9,15 @@ import (
 func Routes(app *fiber.App) {
 
 	// Add a todo
-	app.Post("/add", controller.AddTodo)
+	app.Post("/todo", controller.AddTodo)
 
 	// Get a todo
-	app.Get("/getOne/:id", controller.GetOne)
-	app.Get("/getAll", controller.GetAll)
+	app.Get("/todo/:id", controller.GetOne)
+	app.Get("/todo", controller.GetAll)
 	// Update a todo
-	app.Put("/updateOne/:id", controller.UpdateOne)
+	app.Put("/todo/:id", controller.UpdateOne)
 
 	// Delete a todo
-	app.Delete("/deleteOne/:id", controller.DeleteOne)
-	app.Delete("/deleteMultiple", controller.DeleteMultiple)
+	app.Delete("/todo/:id", controller.DeleteOne)
+	app.Delete("/todo", controller.DeleteMultiple)
 }

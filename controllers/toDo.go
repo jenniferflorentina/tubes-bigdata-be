@@ -45,15 +45,19 @@ func AddTodo(ctx *fiber.Ctx) error {
 	return nil
 }
 
+type DeleteItem struct {
+	listToDelete []string `query:"listToDelete"`
+}
+
 func DeleteMultiple(ctx *fiber.Ctx) error {
-	listToDelete := []string{}
-	if err := ctx.BodyParser(&listToDelete); err != nil {
+	p := new(DeleteItem)
+	if err := ctx.QueryParser(p); err != nil {
 		log.Fatalln("DeleteMany receive list:", err)
 		e.HandleErr(ctx, err)
 		return nil
 	}
 
-	result, err := services.DeleteMultiple(listToDelete)
+	result, err := services.DeleteMultiple(p.listToDelete)
 
 	if err != nil {
 		e.HandleErr(ctx, err)

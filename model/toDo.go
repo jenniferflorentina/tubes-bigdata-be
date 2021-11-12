@@ -8,8 +8,10 @@ import (
 type ToDo struct {
 	ID          primitive.ObjectID `json:"id" bson:"_id,omitempty"`
 	Title       string             `json:"title" bson:"title,omitempty"`
-	Description string             `json:"desc" bson:"desc,omitempty"`
+	Description string             `json:"description" bson:"description,omitempty"`
 	SubTodo     []string           `json:"subTodo" bson:"subTodo,omitempty"`
+	Deadline    string             `json:"deadline" bson:"deadline,omitempty"`
+	Status      bool               `json:"status" bson:"status,omitempty"`
 	CreatedOn   int64              `json:"on" bson:"on,emitempty"`
 }
 
@@ -25,8 +27,14 @@ func PrepareBsonUpdateTodo(newToDo ToDo) bson.M {
 	}
 
 	if newToDo.Description != "" {
-		bsonData["desc"] = newToDo.Description
+		bsonData["description"] = newToDo.Description
 	}
+
+	if newToDo.Deadline != "" {
+		bsonData["deadline"] = newToDo.Deadline
+	}
+
+	bsonData["status"] = newToDo.Status
 
 	if len(newToDo.SubTodo) != 0 {
 		bsonData["subTodo"] = newToDo.SubTodo
