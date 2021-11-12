@@ -46,7 +46,7 @@ func AddTodo(ctx *fiber.Ctx) error {
 }
 
 type DeleteItem struct {
-	listToDelete []string `query:"listToDelete"`
+	ListToDelete []string `query:"listToDelete"`
 }
 
 func DeleteMultiple(ctx *fiber.Ctx) error {
@@ -56,8 +56,7 @@ func DeleteMultiple(ctx *fiber.Ctx) error {
 		e.HandleErr(ctx, err)
 		return nil
 	}
-
-	result, err := services.DeleteMultiple(p.listToDelete)
+	result, err := services.DeleteMultiple(p.ListToDelete)
 
 	if err != nil {
 		e.HandleErr(ctx, err)
