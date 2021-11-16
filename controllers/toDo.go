@@ -131,7 +131,12 @@ func UpdateOne(ctx *fiber.Ctx) error {
 }
 
 func GetAll(ctx *fiber.Ctx) error {
-	result, err := services.GetAll()
+	filter := ""
+	status := ctx.Query("status")
+	if status != "" {
+		filter = status
+	}
+	result, err := services.GetAll(filter)
 
 	if err != nil {
 		e.HandleErr(ctx, err)

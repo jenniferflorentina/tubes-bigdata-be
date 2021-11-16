@@ -6,7 +6,10 @@ import (
 	"context"
 	"errors"
 	"log"
+	"strconv"
 	"time"
+
+	"go.mongodb.org/mongo-driver/mongo/options"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -99,10 +102,21 @@ func DeleteMultiple(listToDelete []string) (int, error) {
 	return int(result.DeletedCount), err
 }
 
-func GetAll() ([]model.ToDo, error) {
+func GetAll(params string) ([]model.ToDo, error) {
 	toDos := model.ToDos{}
-
-	cursor, err := database.Collection.Find(context.TODO(), bson.M{})
+	filter := bson.D{}
+	if params != "" {
+		b, _ := strconv.ParseBool(params)
+		if b {
+			filter = bson.D{{"status", b}}
+		} else {
+			filter = bson.D{{"status", bson.D{{"$ne", true}}}}
+		}
+	}
+	findOptions := options.Find()
+	// Sort by `deadline` field descending
+	findOptions.SetSort(bson.D{{"deadline", 1}})
+	cursor, err := database.Collection.Find(context.TODO(), filter, findOptions)
 	if err != nil {
 		log.Fatalln("DB Read:", err)
 		return nil, err

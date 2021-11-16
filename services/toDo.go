@@ -25,6 +25,6 @@ func DeleteMultiple(listToDelete []string) (int, error) {
 	return repository.DeleteMultiple(listToDelete)
 }
 
-func GetAll() ([]model.ToDo, error) {
-	return repository.GetAll()
+func GetAll(params string) ([]model.ToDo, error) {
+	return repository.GetAll(params)
 }
